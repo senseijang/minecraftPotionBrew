@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en-us">
+    <head>
+        <meta charset = "utf-8">
+        <title>Brewing starts!</title>
+        <style>
+            body {
+                font-family: Helvetica, cursive;
+                margin: auto;
+                text-align: center;
+                background-color: blue;
+            }
+            select {
+                font-family: Helvetica, cursive;
+            }
+        </style>
+    </head>
+    <body>
+        <form action = "/brewB" method = "post">
+            <!-- Type of potion determines what the first ingredients of the potion will be, default: regular -->
+            <h1>Type of potion:</label><h1>
+                <select name = "pot_type">
+                    <option value = 0>regular</option>
+                    <option value = 1>splash</option>
+                    <option value = 2>lingering</option>
+                </select><br>
+
+            <!-- Displays the ingredients that can be added at first -->
+            <h1>Which ingredient would you like to add?</hl><br>
+            <div style="text-align: center; color: white">
+                <div style="display: inline-block; text-align: left;">
+                %for count, ingredient in enumerate(ingredients.keys()):
+                    %if count > 0 and count <= 11 or count == 14:
+                    <input type = "radio" name = "key_ingredient" value = {{count}}>{{ingredient}}<br>
+                    %end
+                %end
+                </div>
+            </div>
+            <button type = "submit">
+                submit
+            </button>
+        </form>
+    </body>
+</html>

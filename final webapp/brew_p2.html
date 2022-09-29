@@ -1,0 +1,42 @@
+<%
+from bottle import request
+fingredients = request.forms.get("pot_type")
+key_ingredient = request.forms.get("key_ingredient")
+end
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+    <head>
+        <meta charset = "utf-8">
+        <title>Brewing continues...</title>
+        <style>
+            body {
+                font-family: Helvetica, cursive;
+                margin: auto;
+                text-align: center;
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <form action = "/brewResults" method = "post">
+            <!-- Hidden variables are used to carry the previous page's values over-->
+            <input type = "hidden" name = "pot_type" value = {{fingredients}}>
+            <input type = "hidden" name = "key_ingredient" value = {{key_ingredient}}>
+
+            <!-- Asks if user wants to add modifiers in forms of redstone or glowstone -->
+            <h1>Final touches?:</h1><br>
+            <div style = "font-size: 15pt; color: white">
+            <img src = "https://cdn.discordapp.com/attachments/917819620981882922/917825264317255760/Glowstone_Dust_JE2_BE2_1.png" alt = "glowstone"><br>
+            <input type = "radio" name = "modifier" value = 12>glowstone<br>
+            <img src = "https://cdn.discordapp.com/attachments/917819620981882922/917825323154956358/Redstone.png" alt = "redstone"><br>
+            <input type = "radio" name = "modifier" value = 13>redstone<br>
+            <br><input type = "radio" name = "modifier" value = 0 checked = "checked">nothing<br>
+            </div>
+            <button type = "submit">
+                submit
+            </button>
+        </form>
+    </body>
+</html>

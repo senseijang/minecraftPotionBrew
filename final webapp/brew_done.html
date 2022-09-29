@@ -1,0 +1,109 @@
+<%
+from bottle import request
+
+# getting variables from previous page
+fingredient = request.forms.get("pot_type")
+key_ingredient = request.forms.get("key_ingredient")
+modifier = request.forms.get("modifier")
+effect = ""
+
+# assembling the recipe for use in finding the effect
+recipe = [int(key_ingredient), int(modifier)]
+
+# converting to use fingredient in comparisons cleanly
+fingredient = int(fingredient)
+
+# setting fingredients
+if fingredient == 0:
+    fingredient_name = ["nether wart"]
+elif fingredient == 1:
+    fingredient_name = ["gunpowder"]
+elif fingredient == 2:
+    fingredient_name = ["gunpowder", "dragon's breath"]
+else:
+    fingredient_name = "broken"
+end
+
+# getting the key of the key_ingredient based on its value
+item_list = fingredient_name
+key_ingredient_name = list(ingredients.keys())[list(ingredients.values()).index(int(key_ingredient))]
+item_list.append(key_ingredient_name)
+
+# getting the key of the modifier based on its value
+modifier_name = list(ingredients.keys())[list(ingredients.values()).index(int(modifier))]
+item_list.append(modifier_name)
+
+# getting the effect of the potion
+if recipe in effects.values():
+    effect = list(effects.keys())[list(effects.values()).index(recipe)]
+
+else:
+    effect = "does not exist. Please Try again!"
+end
+
+# setting pathing for the picture as picture changes with the potion's effect
+path = pictures["default"]
+for key in pictures.keys():
+    if effect == key:
+        path = pictures[key]
+    end
+end
+
+# setting different names depending on what type of potion it is
+# yes there is no picture differentiation between regular, splash, and lingering, there was no pictures of the last 2
+if fingredient == 0:
+    effect = "Potion of " + effect
+elif fingredient == 1:
+    effect = "Splash potion of " + effect
+elif fingredient == 2:
+    effect = "Lingering potion of " + effect
+else:
+    effect = effect
+end
+
+# splitting and individualizing names in order to use them in the html
+first_ingredient = fingredient_name[0]
+
+if fingredient == 2:
+    second_ingredient = fingredient_name[1]
+else:
+    second_ingredient = ""
+end
+
+
+end
+
+%>
+
+<!DOCTYPE html>
+<html lang = "en-us">
+    <head>
+        <meta charset = "utf-8">
+        <title>Done brewing!</title>
+        <style>
+            body {
+                font-family: Helvetica, cursive;
+                margin: auto;
+                text-align: center;
+                background-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>You made a {{effect}}!</h1>
+        <img src = {{path}} alt = "finished potion">
+        <h3>To make this potion in game, you need:</h3>
+        <!-- Display of what ingredients are needed at the end, in a <div> just for style sake -->
+        <div>
+            <p>{{second_ingredient}}<br>
+            {{first_ingredient}}<br>
+            {{key_ingredient_name}}<br>
+            {{modifier_name}}</p>
+        </div>
+        <form action = "/brew">
+            <button type = "submit">
+                try again?
+            </button>
+        </form>
+    </body>
+</html>
